@@ -19,7 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
 
+Auth::routes();
+Route::get('/register', function () {
+    return redirect('/');
+});
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/dashboard', [dashboardController::class, 'dashboard']);
+Route::group(['middleware'=>'auth'],function(){
+    Route::get('/dashboard', [dashboardController::class, 'dashboard']);
+
+});
